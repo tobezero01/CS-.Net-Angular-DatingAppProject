@@ -5,12 +5,11 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_guards/auth.guard';
-<<<<<<< HEAD
+
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
-=======
->>>>>>> 86e6dab5ba2b0c3b033db62a82a9c552e3e029f7
+
 
 export const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -26,12 +25,9 @@ export const routes: Routes = [
     ]
   }
   ,
-<<<<<<< HEAD
   {path: 'errors', component: TestErrorsComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'server-error', component: ServerErrorComponent},
-=======
->>>>>>> 86e6dab5ba2b0c3b033db62a82a9c552e3e029f7
   {path: '**', component: HomeComponent, pathMatch: 'full' }
 
 ];
