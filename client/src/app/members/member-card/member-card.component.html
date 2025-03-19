@@ -1,9 +1,9 @@
 <div class="card mb-4">
   <div class="card-img-wrapper">
-    <img src="{{member().photoUrl}}" alt="{{member().knownAs}}">
+    <img src="{{member().photoUrl || './assets/user.png'}} " alt="{{member().knownAs}}">
     <ul class="list-inline member-icons animate text-center">
       <i class="list-inline-item">
-        <button class="btn-primary btn"><i class="fa fa-user"></i></button>
+        <button routerLink="/members/{{member().username}}" class="btn-primary btn"><i class="fa fa-user"></i></button>
       </i>
       <i class="list-inline-item">
         <button class="btn-primary btn"><i class="fa fa-heart"></i></button>
