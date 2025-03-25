@@ -25,6 +25,7 @@
     "ng-gallery": "^10.0.0",
     "ngx-bootstrap": "^18.0.2",
     "ngx-photo-editor": "^0.4.4",
+    "ngx-spinner": "^18.0.0",
     "ngx-timeago": "^3.0.0",
     "ngx-toast": "^1.1.4",
     "ngx-toastr": "^19.0.0",
