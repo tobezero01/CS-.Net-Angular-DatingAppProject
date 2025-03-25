@@ -28,13 +28,12 @@ export class AccountService {
         if(user) {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUser.set(user);
-          
+
         }
         return user;
       })
     );
   }
-
 
   logout() {
     localStorage.removeItem('user');
