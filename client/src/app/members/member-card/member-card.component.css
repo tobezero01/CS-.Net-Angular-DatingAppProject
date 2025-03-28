@@ -43,3 +43,26 @@
   animation: fa-blink 1.5s linear infinite;
   color: rgb(1, 189, 42)
 }
+
+/* Vị trí chứa ảnh */
+.position-relative {
+  position: relative;
+}
+
+/* Overlay cho phần ảnh */
+.overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Hiển thị overlay khi hover */
+.position-relative:hover .overlay {
+  opacity: 1;
+}
