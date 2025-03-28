@@ -1,3 +1,4 @@
+import { PhotoEditorComponent } from './../photo-editor/photo-editor.component';
 import { GalleryModule } from 'ng-gallery';
 import { Component, HostListener, inject, OnInit, ViewChild } from '@angular/core';
 import { Member } from '../../_models/member';
@@ -12,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-member-edit',
   standalone: true,
-  imports: [TabsModule, GalleryModule, DatePipe, TimeagoModule, FormsModule],
+  imports: [TabsModule, GalleryModule, DatePipe, TimeagoModule, FormsModule, PhotoEditorComponent],
   templateUrl: './member-edit.component.html',
   styleUrl: './member-edit.component.css'
 })
@@ -49,6 +50,10 @@ export class MemberEditComponent implements OnInit {
       }
 
     })
+  }
+
+  onMemberChange(event: Member) {
+    this.member = event;
   }
 
 }
