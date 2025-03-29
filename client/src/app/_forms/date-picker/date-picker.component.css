@@ -1,0 +1,14 @@
+/* date-picker.component.css */
+.custom-theme {
+  background-color: rgba(0, 0, 0, 0.5); /* Màu đen với opacity 50% */
+  padding: 1rem;  /* Có thể điều chỉnh tương đương với p-5 */
+  position: fixed;  /* Để overlay luôn hiện lên trên */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;  /* Đảm bảo đè lên các thành phần khác */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
