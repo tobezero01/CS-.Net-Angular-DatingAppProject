@@ -1,3 +1,4 @@
+import { TimeagoModule, TimeagoPipe } from 'ngx-timeago';
 import { map } from 'rxjs';
 import { Component, inject, OnInit } from '@angular/core';
 import { MembersService } from '../../_services/members.service';
@@ -5,10 +6,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Member } from '../../_models/member';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { GalleryItem, GalleryModule, ImageItem} from 'ng-gallery';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-member-detail',
   standalone: true,
-  imports: [TabsModule, GalleryModule],
+  imports: [TabsModule, GalleryModule, TimeagoModule, DatePipe],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css'
 })
