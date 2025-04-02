@@ -2,13 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
 import { User } from '../_models/User';
 import { map } from 'rxjs';
+import { LikesService } from './like.service';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private http = inject(HttpClient);
-  baseUrl = 'http://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
+  private likesService = inject(LikesService);
   currentUser = signal<User | null>(null);
 
   login(model : any) {
@@ -37,6 +40,7 @@ export class AccountService {
   setCurrentUser(user : User) {
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUser.set(user);
+    this.likesService.getLikeIds();
   }
 
   logout() {
