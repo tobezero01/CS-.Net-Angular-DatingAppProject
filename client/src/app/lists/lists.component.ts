@@ -17,7 +17,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   likesService = inject(LikesService);
   predicate = 'liked';
   pageNumber = 1;
-  pageSize = 3;
+  pageSize = 5;
 
   ngOnInit(): void {
     this.loadLikes();
