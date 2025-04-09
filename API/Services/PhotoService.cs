@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using API.Helpers;
 using API.Interfaces;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Options;
 
 namespace API.Services
