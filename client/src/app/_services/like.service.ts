@@ -10,7 +10,7 @@ import { setPaginatedResponse, setPaginationHeaders } from './paginationHelper';
 })
 export class LikesService {
   baseUrl = environment.apiUrl;
-  private http = inject(HttpClient);
+  http = inject(HttpClient);
   likeIds = signal<number[]>([]);
   paginatedResult = signal<PaginatedResult<Member[]> | null>(null);
 
