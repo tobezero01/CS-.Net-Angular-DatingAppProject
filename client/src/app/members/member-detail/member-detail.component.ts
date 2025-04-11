@@ -10,6 +10,7 @@ import { GalleryItem, GalleryModule, ImageItem} from 'ng-gallery';
 import { DatePipe } from '@angular/common';
 import { MemberMessagesComponent } from "../member-messages/member-messages.component";
 import { Message } from '../../_models/message';
+import { PresenceService } from '../../_services/presence.service';
 @Component({
   selector: 'app-member-detail',
   standalone: true,
@@ -19,9 +20,10 @@ import { Message } from '../../_models/message';
 })
 export class MemberDetailComponent implements OnInit{
   @ViewChild('memberTabs', {static: true}) memberTab?: TabsetComponent;
-  private memberService = inject(MembersService);
-  private route = inject(ActivatedRoute);
-  private messagesService = inject(MessageService);
+  memberService = inject(MembersService);
+  route = inject(ActivatedRoute);
+  messagesService = inject(MessageService);
+  presenceService = inject(PresenceService);
   member: Member = {} as Member;
   images : GalleryItem[] = [];
   activeTab? : TabDirective;
