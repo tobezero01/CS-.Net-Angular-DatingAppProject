@@ -1,61 +1,58 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace API.Extensions
+namespace API.Extensions;
+
+public static class IdentityServiceExtensions
 {
-	public static class IdentityServiceExtensions
-	{
-		public static IServiceCollection AddIdentityServices(this IServiceCollection service,
-			IConfiguration configuration)
-		{
-			service.AddIdentityCore<AppUser>(opt =>
-			{
-				opt.Password.RequireNonAlphanumeric = false;
-			})
-				.AddRoles<AppRole>()
-				.AddRoleManager<RoleManager<AppRole>>()
-				.AddEntityFrameworkStores<DataContext>();
+    public static IServiceCollection AddIdentityServices(this IServiceCollection services,
+        IConfiguration config)
+    {
+        services.AddIdentityCore<AppUser>(opt =>
+        {
+            opt.Password.RequireNonAlphanumeric = false;
+        })
+            .AddRoles<AppRole>()
+            .AddRoleManager<RoleManager<AppRole>>()
+            .AddEntityFrameworkStores<DataContext>();
 
-			service.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-			.AddJwtBearer(options =>
-			{
-				var tokenKey = configuration["TokenSettings:TokenKey"] ?? throw new Exception("TokenKey not found");
-				options.TokenValidationParameters = new TokenValidationParameters
-				{
-					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
-					ValidateIssuer = false,
-					ValidateAudience = false
-				};
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                var tokenKey = config["TokenKey"] ?? throw new Exception("TokenKey not found");
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
 
-				options.Events = new JwtBearerEvents
-				{
-					OnMessageReceived = context =>
-					{
-						var accessToken = context.Request.Query["access_token"];
-						var path = context.HttpContext.Request.Path;
-						if (!string.IsNullOrWhiteSpace(accessToken) && path.StartsWithSegments("/hubs"))
-						{
-							context.Token = accessToken;
-						}
-						return Task.CompletedTask;
-					}
-				};
-			});
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context => 
+                    {
+                        var accessToken = context.Request.Query["access_token"];
 
-			service.AddAuthorizationBuilder()
-				.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"))
-				.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                        {
+                            context.Token = accessToken;
+                        }
 
-			return service;
-		}
-	}
+                        return Task.CompletedTask;
+                    }
+                };
+            });
+
+        services.AddAuthorizationBuilder()
+            .AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"))
+            .AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+        
+        return services;
+    }
 }

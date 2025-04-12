@@ -1,60 +1,57 @@
-
+﻿using API.Controllers;
 using API.DTOs;
 using API.Extensions;
 using API.Helpers;
+using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API;
+
+public class LikesController(IUnitOfWork unitOfWork) : BaseApiController
 {
-
-    public class LikesController(ILikesRepository likesRepository) : BaseApiController
+    [HttpPost("{targetUserId:int}")]
+    public async Task<ActionResult> ToggleLike(int targetUserId)
     {
-        [HttpPost("{targetUserId:int}")]
-        public async Task<ActionResult> ToggleLike(int targetUserId)
+        var sourceUserId = User.GetUserId();
+
+        if (sourceUserId == targetUserId) return BadRequest("You cannot like yourself");
+
+        var existingLike = await unitOfWork.LikesRepository.GetUserLike(sourceUserId, targetUserId);
+
+        if (existingLike == null)
         {
-            var sourceUserId = User.GetUserId();
-
-            if (sourceUserId == targetUserId) return BadRequest("You cannot like yourself");
-
-            var existingLike = await likesRepository.GetUserLike(sourceUserId, targetUserId);
-
-            if (existingLike == null)
+            var like = new UserLike
             {
-                var like = new UserLike
-                {
-                    SourceUserId = sourceUserId,
-                    TargetUserId = targetUserId
-                };
-                likesRepository.AddLike(like);
-            }
-            else
-            {
-                likesRepository.DeleteLike(existingLike);
-            }
+                SourceUserId = sourceUserId,
+                TargetUserId = targetUserId
+            };
 
-            if (await likesRepository.SaveChanges()) return Ok();
-
-            return BadRequest("Failed to update Likes");
+            unitOfWork.LikesRepository.AddLike(like);
+        }
+        else 
+        {
+            unitOfWork.LikesRepository.DeleteLike(existingLike);
         }
 
-        [HttpGet("list")]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetCurrentUserLikeIds()
-        {
-            return Ok(await likesRepository.GetCurrentUserLikeIds(User.GetUserId()));
-        }
+        if (await unitOfWork.Complete()) return Ok();
 
-        [HttpGet]
-        public async Task<ActionResult<PagedList<MemberDto>>> GetUserLikes([FromQuery] LikeParams likeParams)
-        {
-
-            likeParams.UserId = User.GetUserId();
-            
-            var users = await likesRepository.GetUserLikes(likeParams);
-            Response.AddPaginationHeader(users as PagedList<MemberDto>);
-            return Ok(users);
-        } 
-
+        return BadRequest("Failed to update like");
     }
-    
 
+    [HttpGet("list")]
+    public async Task<ActionResult<IEnumerable<int>>> GetCurrentUserLikeIds()
+    {
+        return Ok(await unitOfWork.LikesRepository.GetCurrentUserLikeIds(User.GetUserId()));
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<MemberDto>>> GetUserLikes([FromQuery]LikesParams likesParams)
+    {
+        likesParams.UserId = User.GetUserId();
+        var users = await unitOfWork.LikesRepository.GetUserLikes(likesParams);
+
+        Response.AddPaginationHeader(users);
+
+        return Ok(users);
+    }
 }

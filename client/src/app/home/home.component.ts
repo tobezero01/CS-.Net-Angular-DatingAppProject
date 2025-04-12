@@ -1,27 +1,21 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RegisterComponent } from "../register/register.component";
-import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [RegisterComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+    selector: 'app-home',
+    standalone: true,
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.css',
+    imports: [RegisterComponent]
 })
-export class HomeComponent implements OnInit{
-
+export class HomeComponent {
   registerMode = false;
 
-  ngOnInit(): void {
-  }
   registerToggle() {
-    this.registerMode = !this.registerMode;
+    this.registerMode = !this.registerMode
   }
 
-
-
-  cancelRegisterMode(event : boolean) {
+  cancelRegisterMode(event: boolean) {
     this.registerMode = event;
   }
 }

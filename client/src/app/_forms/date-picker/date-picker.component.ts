@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, input, Self } from '@angular/core';
+import { Component, Self, input } from '@angular/core';
 import { ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerConfig, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
@@ -18,7 +18,7 @@ export class DatePickerComponent implements ControlValueAccessor {
   constructor(@Self() public ngControl: NgControl) {
     this.ngControl.valueAccessor = this;
     this.bsConfig = {
-      containerClass: 'bg-black p-3 text-light',
+      containerClass: 'theme-red',
       dateInputFormat: 'DD MMMM YYYY'
     }
   }

@@ -1,39 +1,34 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using API.Data;
-using API.Helpers;
+﻿using API.Data;
 using API.Interfaces;
-using API.Repositories;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Extensions
+namespace API.Extensions;
+
+public static class ApplicationServiceExtensions
 {
-    public static class ApplicationServiceExtensions
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services,
+        IConfiguration config)
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services,
-            IConfiguration configuration)
+        services.AddControllers();
+        services.AddDbContext<DataContext>(opt =>
         {
-            services.AddControllers();
+            opt.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+        });
+        services.AddCors();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ILikesRepository, LikesRepository>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
+        services.AddScoped<IPhotoRepository, PhotoRepository>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IPhotoService, PhotoService>();
+        services.AddScoped<LogUserActivity>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+        services.AddSignalR();
+        services.AddSingleton<PresenceTracker>();
 
-            services.AddDbContext<DataContext>(opt =>
-            {
-                opt.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
-            });
-            services.AddCors();
-            services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IPhotoService, PhotoService>();
-            services.AddScoped<ILikesRepository, LikesRepository>();
-            services.AddScoped<IMessageRepository, MessageRepository>();
-            services.AddScoped<LogUserActivity>();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
-            services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
-
-            return services;
-        }
+        return services;
     }
 }

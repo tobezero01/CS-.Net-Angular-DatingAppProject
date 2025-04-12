@@ -2,9 +2,9 @@ import { Injectable, inject, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 import { ToastrService } from 'ngx-toastr';
+import { User } from '../_models/user';
 import { take } from 'rxjs';
 import { Router } from '@angular/router';
-import { User } from '../_models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ import { User } from '../_models/User';
 export class PresenceService {
   hubUrl = environment.hubsUrl;
   private hubConnection?: HubConnection;
-  toastr = inject(ToastrService);
-  router = inject(Router);
+  private toastr = inject(ToastrService);
+  private router = inject(Router);
   onlineUsers = signal<string[]>([]);
 
   createHubConnection(user: User) {

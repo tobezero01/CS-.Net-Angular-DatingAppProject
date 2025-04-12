@@ -1,17 +1,16 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { LikesService } from '../_services/likes.service';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { FormsModule } from '@angular/forms';
 import { MemberCardComponent } from "../members/member-card/member-card.component";
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { LikesService } from '../_services/like.service';
-import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'app-lists',
     standalone: true,
     templateUrl: './lists.component.html',
     styleUrl: './lists.component.css',
-    imports: [ButtonsModule, FormsModule, MemberCardComponent, PaginationModule, NgIf]
+    imports: [ButtonsModule, FormsModule, MemberCardComponent, PaginationModule]
 })
 export class ListsComponent implements OnInit, OnDestroy {
   likesService = inject(LikesService);
@@ -20,7 +19,7 @@ export class ListsComponent implements OnInit, OnDestroy {
   pageSize = 5;
 
   ngOnInit(): void {
-    this.loadLikes();
+    this.loadLikes(); 
   }
 
   getTitle() {

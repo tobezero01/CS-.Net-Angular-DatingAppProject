@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using API.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Entities
+namespace API;
+
+public class AppUserRole : IdentityUserRole<int>
 {
-    public class AppUserRole : IdentityUserRole<int>
-    {
-        public AppUser User { get; set; } = null!;
-        public AppRole Role { get; set; } = null!;
-    }
+    public AppUser User { get; set; } = null!;
+    public AppRole Role { get; set; } = null!;
 }

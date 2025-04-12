@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { AdminService } from '../../_services/admin.service';
+import { Component, OnInit, inject } from '@angular/core';
 import { Photo } from '../../_models/photo';
+import { AdminService } from '../../_services/admin.service';
 
 @Component({
   selector: 'app-photo-management',
@@ -36,4 +36,3 @@ export class PhotoManagementComponent implements OnInit {
   }
 
 }
-

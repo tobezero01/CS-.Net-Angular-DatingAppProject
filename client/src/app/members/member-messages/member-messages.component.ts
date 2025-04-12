@@ -2,6 +2,7 @@ import { AfterViewChecked, Component, ViewChild, inject, input } from '@angular/
 import { MessageService } from '../../_services/message.service';
 import { TimeagoModule } from 'ngx-timeago';
 import { FormsModule, NgForm } from '@angular/forms';
+
 @Component({
   selector: 'app-member-messages',
   standalone: true,
@@ -16,7 +17,7 @@ export class MemberMessagesComponent implements AfterViewChecked {
   username = input.required<string>();
   messageContent = '';
   loading = false;
-
+  
   sendMessage() {
     this.loading = true;
     this.messageService.sendMessage(this.username(), this.messageContent).then(() => {

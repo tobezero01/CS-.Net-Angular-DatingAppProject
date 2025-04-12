@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { User } from '../../_models/User';
+import { Component, OnInit, inject } from '@angular/core';
 import { AdminService } from '../../_services/admin.service';
+import { User } from '../../_models/user';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { RolesModalComponent } from '../../modals/roles-modal/roles-modal.component';
 
@@ -54,4 +54,3 @@ export class UserManagementComponent implements OnInit {
   }
 
 }
-

@@ -1,12 +1,11 @@
-import { Directive, inject, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, OnInit, TemplateRef, ViewContainerRef, inject } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 
 @Directive({
-  selector: '[appHasRole]',
+  selector: '[appHasRole]', // *appHasRole
   standalone: true
 })
-export class HasRoleDirective implements OnInit{
-
+export class HasRoleDirective implements OnInit {
   @Input() appHasRole: string[] = [];
   private accountService = inject(AccountService);
   private viewContainerRef = inject(ViewContainerRef);

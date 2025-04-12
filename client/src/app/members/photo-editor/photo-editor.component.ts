@@ -1,11 +1,10 @@
-import { Photo } from './../../_models/photo';
-import { base } from './../../../../node_modules/acorn-walk/dist/walk.d';
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import {Component, OnInit, inject, input, output} from '@angular/core';
 import { Member } from '../../_models/member';
 import { DecimalPipe, NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { FileUploadModule, FileUploader } from 'ng2-file-upload';
 import { AccountService } from '../../_services/account.service';
 import { environment } from '../../../environments/environment';
+import { Photo } from '../../_models/photo';
 import { MembersService } from '../../_services/members.service';
 
 @Component({
@@ -15,21 +14,21 @@ import { MembersService } from '../../_services/members.service';
   templateUrl: './photo-editor.component.html',
   styleUrl: './photo-editor.component.css'
 })
-export class PhotoEditorComponent implements OnInit{
+export class PhotoEditorComponent implements OnInit {
   private accountService = inject(AccountService);
   private memberService = inject(MembersService);
-  uploader? : FileUploader;
-  hasBaseDropzoneOver = false;
-  baseUrl = environment.apiUrl;
   member = input.required<Member>();
+  uploader?: FileUploader;
+  hasBaseDropZoneOver = false;
+  baseUrl = environment.apiUrl;
   memberChange = output<Member>();
 
   ngOnInit(): void {
     this.initializeUploader();
   }
 
-  fileOverBase(e : any) {
-    this.hasBaseDropzoneOver = e;
+  fileOverBase(e: any) {
+    this.hasBaseDropZoneOver = e;
   }
 
   deletePhoto(photo: Photo) {
@@ -69,8 +68,9 @@ export class PhotoEditorComponent implements OnInit{
       allowedFileType: ['image'],
       removeAfterUpload: true,
       autoUpload: false,
-      maxFileSize: 10 * 1024 *1024
+      maxFileSize: 10 * 1024 * 1024,
     });
+
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false
     }
@@ -80,7 +80,7 @@ export class PhotoEditorComponent implements OnInit{
       const updatedMember = {...this.member()}
       updatedMember.photos.push(photo);
       this.memberChange.emit(updatedMember);
-      if(photo.isMain) {
+      if (photo.isMain) {
         const user = this.accountService.currentUser();
         if (user) {
           user.photoUrl = photo.url;
@@ -95,4 +95,5 @@ export class PhotoEditorComponent implements OnInit{
       }
     }
   }
+
 }

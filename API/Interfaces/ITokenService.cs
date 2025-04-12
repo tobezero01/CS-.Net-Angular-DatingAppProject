@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using API.DTOs;
-using API.Entities;
+﻿using API.Entities;
 
-namespace API.Interfaces
+namespace API;
+
+public interface ITokenService
 {
-    public interface ITokenService 
-    {
-        Task<string> CreateToken(AppUser appUser);
-    }
+    Task<string> CreateToken(AppUser user);
 }
