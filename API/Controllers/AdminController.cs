@@ -11,6 +11,10 @@ namespace API;
 public class AdminController(UserManager<AppUser> userManager, IUnitOfWork unitOfWork,
     IPhotoService photoService) : BaseApiController
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     [Authorize(Policy = "RequireAdminRole")]
     [HttpGet("users-with-roles")]
     public async Task<ActionResult> GetUsersWithRoles()
@@ -27,6 +31,12 @@ public class AdminController(UserManager<AppUser> userManager, IUnitOfWork unitO
         return Ok(users);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="roles"></param>
+    /// <returns></returns>
     [Authorize(Policy = "RequireAdminRole")]
     [HttpPost("edit-roles/{username}")]
     public async Task<ActionResult> EditRoles(string username, string roles)
@@ -52,6 +62,10 @@ public class AdminController(UserManager<AppUser> userManager, IUnitOfWork unitO
         return Ok(await userManager.GetRolesAsync(user));
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     [Authorize(Policy = "ModeratePhotoRole")]
     [HttpGet("photos-to-moderate")]
     public async Task<ActionResult> GetPhotosForModeration()
@@ -61,6 +75,11 @@ public class AdminController(UserManager<AppUser> userManager, IUnitOfWork unitO
         return Ok(photos);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="photoId"></param>
+    /// <returns></returns>
     [Authorize(Policy = "ModeratePhotoRole")]
     [HttpPost("approve-photo/{photoId}")]
     public async Task<ActionResult> ApprovePhoto(int photoId)
@@ -82,6 +101,11 @@ public class AdminController(UserManager<AppUser> userManager, IUnitOfWork unitO
         return Ok();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="photoId"></param>
+    /// <returns></returns>
     [Authorize(Policy = "ModeratePhotoRole")]
     [HttpPost("reject-photo/{photoId}")]
     public async Task<ActionResult> RejectPhoto(int photoId)

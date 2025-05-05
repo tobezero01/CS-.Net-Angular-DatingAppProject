@@ -13,7 +13,10 @@ namespace API.Controllers;
 public class AccountController(UserManager<AppUser> userManager, ITokenService tokenService, 
     IMapper mapper) : BaseApiController
 {
-    [HttpPost("register")] // account/register
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <value></value>
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
         if (await UserExists(registerDto.Username)) return BadRequest("Username is taken");
@@ -35,6 +38,11 @@ public class AccountController(UserManager<AppUser> userManager, ITokenService t
         };
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="loginDto"></param>
+    /// <returns></returns>
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
     {
@@ -55,6 +63,12 @@ public class AccountController(UserManager<AppUser> userManager, ITokenService t
         };
     }
 
+
+    /// <summary>
+    /// /// 
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
     private async Task<bool> UserExists(string username)
     {
         return await userManager.Users.AnyAsync(x => x.NormalizedUserName == username.ToUpper()); // Bob != bob

@@ -9,6 +9,11 @@ namespace API;
 
 public class LikesController(IUnitOfWork unitOfWork) : BaseApiController
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="targetUserId"></param>
+    /// <returns></returns>
     [HttpPost("{targetUserId:int}")]
     public async Task<ActionResult> ToggleLike(int targetUserId)
     {
@@ -38,12 +43,21 @@ public class LikesController(IUnitOfWork unitOfWork) : BaseApiController
         return BadRequest("Failed to update like");
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("list")]
     public async Task<ActionResult<IEnumerable<int>>> GetCurrentUserLikeIds()
     {
         return Ok(await unitOfWork.LikesRepository.GetCurrentUserLikeIds(User.GetUserId()));
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="likesParams"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUserLikes([FromQuery]LikesParams likesParams)
     {

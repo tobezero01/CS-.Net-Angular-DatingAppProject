@@ -8,6 +8,10 @@ namespace API;
 
 public class BuggyController(DataContext context) : BaseApiController
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     [Authorize]
     [HttpGet("auth")]
     public ActionResult<string> GetAuth()
@@ -15,6 +19,10 @@ public class BuggyController(DataContext context) : BaseApiController
         return "secret text";
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("not-found")]
     public ActionResult<AppUser> GetNotFound()
     {
@@ -25,6 +33,10 @@ public class BuggyController(DataContext context) : BaseApiController
         return thing;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("server-error")]
     public ActionResult<AppUser> GetServerError()
     {
@@ -33,6 +45,10 @@ public class BuggyController(DataContext context) : BaseApiController
         return thing;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     [HttpGet("bad-request")]
     public ActionResult<string> GetBadRequest()
     {

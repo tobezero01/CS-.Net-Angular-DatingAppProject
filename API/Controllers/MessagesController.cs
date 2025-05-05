@@ -12,6 +12,11 @@ namespace API;
 public class MessagesController(IUnitOfWork unitOfWork, 
     IMapper mapper) : BaseApiController
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="createMessageDto"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<ActionResult<MessageDto>> CreateMessage(CreateMessageDto createMessageDto)
     {
@@ -42,6 +47,11 @@ public class MessagesController(IUnitOfWork unitOfWork,
         return BadRequest("Failed to save message");
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="messageParams"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesForUser(
         [FromQuery]MessageParams messageParams)
@@ -55,6 +65,11 @@ public class MessagesController(IUnitOfWork unitOfWork,
         return messages;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
     [HttpGet("thread/{username}")]
     public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessageThread(string username)
     {
@@ -63,6 +78,11 @@ public class MessagesController(IUnitOfWork unitOfWork,
         return Ok(await unitOfWork.MessageRepository.GetMessageThread(currentUsername, username));
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteMessage(int id)
     {

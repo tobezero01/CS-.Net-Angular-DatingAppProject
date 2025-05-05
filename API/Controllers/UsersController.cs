@@ -14,6 +14,11 @@ namespace API.Controllers;
 public class UsersController(IUnitOfWork unitOfWork, IMapper mapper, 
     IPhotoService photoService) : BaseApiController
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userParams"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
     {
@@ -25,7 +30,12 @@ public class UsersController(IUnitOfWork unitOfWork, IMapper mapper,
         return Ok(users);
     }
 
-    [HttpGet("{username}")]  // /api/users/2
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
+    [HttpGet("{username}")]  
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
         var currentUsername = User.GetUsername();
@@ -37,6 +47,11 @@ public class UsersController(IUnitOfWork unitOfWork, IMapper mapper,
         return user;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="memberUpdateDto"></param>
+    /// <returns></returns>
     [HttpPut]
     public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
     {
@@ -51,6 +66,11 @@ public class UsersController(IUnitOfWork unitOfWork, IMapper mapper,
         return BadRequest("Failed to update the user");
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns></returns>
     [HttpPost("add-photo")]
     public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
     {
@@ -77,6 +97,11 @@ public class UsersController(IUnitOfWork unitOfWork, IMapper mapper,
         return BadRequest("Problem adding photo");
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="photoId"></param>
+    /// <returns></returns>
     [HttpPut("set-main-photo/{photoId:int}")]
     public async Task<ActionResult> SetMainPhoto(int photoId)
     {
@@ -97,6 +122,11 @@ public class UsersController(IUnitOfWork unitOfWork, IMapper mapper,
         return BadRequest("Problem setting main photo");
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="photoId"></param>
+    /// <returns></returns>
     [HttpDelete("delete-photo/{photoId:int}")]
     public async Task<ActionResult> DeletePhoto(int photoId)
     {
