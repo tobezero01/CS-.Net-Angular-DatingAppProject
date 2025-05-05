@@ -6,6 +6,11 @@ namespace API;
 public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger, 
     IHostEnvironment env)
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="context"></param>
+    /// <returns></returns>
     public async Task InvokeAsync(HttpContext context)
     {
         try
